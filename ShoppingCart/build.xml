@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="test" name="ShoppingCart">
+    <property environment="env"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name= "testClasses" location="./testClasses"/>
+    <property name= "package" location = "./MyProduct.jar"/>
+    <property name= "mainFiles" location ="./src/main"/>
+    <property name= "testFiles" location ="./src/test"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="D:/Download/Compressed/eclipse/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+        <pathelement location="D:/Download/Compressed/eclipse/plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+    </path>
+    <path id="ShoppingCart.classpath">
+        <pathelement location="bin"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+    </path>
+              	<target name="init">
+              	        <mkdir dir="bin"/>
+              	        <copy includeemptydirs="false" todir="bin">
+              	            <fileset dir="${mainFiles}">
+              	                <exclude name="**/*.launch"/>
+              	                <exclude name="**/*.java"/>
+              	            </fileset>
+              	        </copy>
+              	    </target>
+
+              	    <target depends="init" name="compile">
+              	        <echo message="${ant.project.name}: ${ant.file}"/>
+              	        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+              	            <src path="${mainFiles}"/>
+              	            <classpath refid="ShoppingCart.classpath"/>
+              	        </javac>
+              	    </target>
+              	    <target name="compile-testcases" depends="compile">
+              	        <mkdir dir="${testClasses}"/>
+              	        <javac srcdir="${testFiles}"  destdir="${testClasses}" debug="true" includeantruntime="false">
+              	             <classpath>			
+              	                  <path refid="JUnit 4.libraryclasspath"/> 
+              	              	  <pathelement location="bin"/>
+              	             </classpath>
+              	        </javac>		
+              	    </target>
+              	              	
+              	    <target name ="jar" depends ="compile">
+              	        <jar destfile ="${package}">
+              	             <fileset dir ="bin"></fileset>
+              	        </jar>
+              	    </target>
+              	              	
+              	    <target name="test" depends="compile-testcases,jar">
+              	    	<junit printsummary="on" haltonfailure="yes" fork="true">
+              	            <classpath>
+              	              		<path refid="JUnit 4.libraryclasspath"/>
+              	              	    <pathelement location="bin"/>
+              	              		<pathelement location="${testClasses}"/>
+              	             </classpath>
+              	             <formatter type="brief" usefile="false"/>
+              	    		 <formatter type="plain"/>
+              	    		 <formatter type="xml"/>
+              	             <batchtest fork="yes" todir="./"> 
+              	              	    <fileset dir="${testClasses}" >
+              	              	        <include name="**/*Test.class"/>
+              	              	    </fileset>
+              	             </batchtest>
+              	              				
+              	        </junit>
+              	    </target>
+</project>
