@@ -50,6 +50,18 @@ public class ShoppingCartTest {
 	}
 	
 	@Test
+	public void testAddGeneral()
+	{
+		cart= new ShoppingCart();
+		cart.add(java);
+		cart.add(web);
+		Book other= new Book("Rahaf",250);
+		cart.add(other);
+		assertEquals(3,cart.getCount());
+		assertTrue(477==cart.getPrice());
+	}
+	
+	@Test
 	public void testRemove1()
 	{
 		cart.add(java);
