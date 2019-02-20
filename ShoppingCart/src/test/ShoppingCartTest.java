@@ -52,6 +52,7 @@ public class ShoppingCartTest {
 	@Test
 	public void testAddGeneral()
 	{
+		// the code ia already general, it's just an additional case (not necessary)
 		cart= new ShoppingCart();
 		cart.add(java);
 		cart.add(web);
